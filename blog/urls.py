@@ -1,5 +1,8 @@
 from django.urls import path, include
-from blog.views import PostViewSet
+from blog.views import PostViewSet, api_root
+from rest_framework.urlpatterns import format_suffix_patterns
+
+app_name = 'blog'  # so important to use blog:post-detail in other apps or either other files in this app
 
 post_list = PostViewSet.as_view({
     'get': 'list',
@@ -15,6 +18,13 @@ post_detail = PostViewSet.as_view({
 
 
 urlpatterns = [
+    path('', api_root),
     path('posts/', post_list, name='posts-list'),
     path('posts/<int:pk>/', post_detail, name='post-details')
 ]
+
+# urlpatterns += [      # when add app_name to this urls.py, browsable api login not worked. put this in main urls.py
+#     path('api-auth/', include('rest_framework.urls')),
+# ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
