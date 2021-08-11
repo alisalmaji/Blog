@@ -21,10 +21,11 @@ class Post(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
 
     def get_absolute_url(self):
-        return reverse('blog:post-details',
-                       args=[self.publish.year,     # Where it get these attributes?
-                             self.publish.month,
-                             self.publish.day, self.slug])
+        # return reverse('blog:post-details',
+        #                args=[self.publish.year,     # Where it get these attributes?
+        #                      self.publish.month,
+        #                      self.publish.day, self.slug])
+        return reverse('blog:post-details', args=[self.pk])
 
     class Meta:
         ordering = ('-publish',)

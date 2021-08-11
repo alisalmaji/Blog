@@ -8,3 +8,10 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ['title', 'slug', 'body', 'author', 'publish', 'status', 'created', 'updated']
+
+
+class PostShareSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=100)
+    to = serializers.EmailField()
+    comments = serializers.CharField()
+
