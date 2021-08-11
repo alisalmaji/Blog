@@ -26,11 +26,16 @@ class PostViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
+    def get_serializer_class(self):
+        if self.action == 'share_with_email':
+            return PostShareSerializer
+        else:
+            return PostSerializer
 
-@api_view(['POST'])
-def share_with_email(request, pk, *args, **kwargs):
-    if request.method == 'POST':
+    @action(detail=False, methods=['POST'])
+    def share_with_email(self, request, pk, *args, **kwargs):
         ser = PostShareSerializer(data=request.data)
+
         if ser.is_valid():
             post = Post.objects.get(id=pk)
             post_url = request.build_absolute_uri(post.get_absolute_url())
@@ -40,3 +45,4 @@ def share_with_email(request, pk, *args, **kwargs):
                       f"{ser.validated_data['comments']}"
             send_mail(subject, message, 'alisalmajialisalmaji@gmail.com', [ser.validated_data['to']])
             return Response(ser.validated_data)
+

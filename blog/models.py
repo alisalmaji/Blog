@@ -25,7 +25,7 @@ class Post(models.Model):
         #                args=[self.publish.year,     # Where it get these attributes?
         #                      self.publish.month,
         #                      self.publish.day, self.slug])
-        return reverse('blog:post-details', args=[self.pk])
+        return reverse('blog:post-details', kwargs={'pk': self.pk})  # kwargs
 
     class Meta:
         ordering = ('-publish',)
