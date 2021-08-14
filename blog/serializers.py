@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from blog.models import Post
+from blog.models import Post, Comment
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -15,3 +15,8 @@ class PostShareSerializer(serializers.Serializer):
     to = serializers.EmailField()
     comments = serializers.CharField()
 
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = []
